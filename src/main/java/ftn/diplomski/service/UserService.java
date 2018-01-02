@@ -3,6 +3,7 @@
  */
 package ftn.diplomski.service;
 
+import java.util.List;
 import java.util.Set;
 
 import ftn.diplomski.entity.User;
@@ -36,5 +37,20 @@ public interface UserService {
 	 * @return 
 	 */
 	User saveUser(User user);
+
+	/**
+	 * @return
+	 */
+	List<User> findUserList();
+
+	/**
+	 * @param username
+	 */
+	void enableUser(String username);
+
+	/**
+	 * @param username
+	 */
+	void disableUser(String username);
 	
 }

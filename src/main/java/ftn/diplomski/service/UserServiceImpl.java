@@ -3,6 +3,7 @@
  */
 package ftn.diplomski.service;
 
+import java.util.List;
 import java.util.Set;
 
 import org.slf4j.Logger;
@@ -114,6 +115,36 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User saveUser(User user) {
 		return userDao.save(user);		
+	}
+
+	/* (non-Javadoc)
+	 * @see ftn.diplomski.service.UserService#findUserList()
+	 */
+	@Override
+	public List<User> findUserList() {
+		return userDao.findAll();
+	}
+
+	/* (non-Javadoc)
+	 * @see ftn.diplomski.service.UserService#enableUser(java.lang.String)
+	 */
+	@Override
+	public void enableUser(String username) {
+		User user = findByUsername(username);
+        user.setEnabled(true);
+        userDao.save(user);		
+	}
+
+	/* (non-Javadoc)
+	 * @see ftn.diplomski.service.UserService#disableUser(java.lang.String)
+	 */
+	@Override
+	public void disableUser(String username) {
+		User user = findByUsername(username);
+        user.setEnabled(false);
+        System.out.println(user.isEnabled());
+        userDao.save(user);
+        System.out.println(username + " is disabled.");		
 	}
 
 }
