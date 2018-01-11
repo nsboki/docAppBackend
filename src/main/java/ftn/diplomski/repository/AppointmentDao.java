@@ -16,4 +16,12 @@ import ftn.diplomski.entity.Appointment;
 public interface AppointmentDao extends CrudRepository<Appointment, Long>{
 
 	List<Appointment> findAll();
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	List<Appointment> findByDoctorUsername(String username);
+	
+	List<Appointment> findByPatient(Long id);
 }

@@ -27,10 +27,14 @@ public class Appointment {
 	private String description;
 	private boolean confirmed;
 	
-	@ManyToOne
-	@JoinColumn(name = "doctor_id")
-	private Doctor doctor;
+	private String doctorUsername;
 	
+	public String getDoctorUsername() {
+		return doctorUsername;
+	}
+	public void setDoctorUsername(String doctorUsername) {
+		this.doctorUsername = doctorUsername;
+	}
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User patient;
@@ -58,12 +62,6 @@ public class Appointment {
 	}
 	public void setConfirmed(boolean confirmed) {
 		this.confirmed = confirmed;
-	}
-	public Doctor getDoctor() {
-		return doctor;
-	}
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
 	}
 	public User getPatient() {
 		return patient;

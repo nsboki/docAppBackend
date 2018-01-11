@@ -32,8 +32,6 @@
 <body>
 <!-- Navigation -->
 <div th:fragment="navbar">
-    <img class="img-responsive" src="/images/banner.png" alt="banner"/>
-
     <nav class="navbar navbar-default " role="navigation">
     <div class="container">
         <div class="navbar-header page-scroll">
@@ -53,23 +51,7 @@
                 <li class="hidden">
                     <a class="page-scroll" href="#page-top"></a>
                 </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Accounts <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a th:href="@{/account/primaryAccount}">Primary</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a th:href="@{/account/savingsAccount}">Savings</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Transfer <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        <li><a th:href="@{/transfer/betweenAccounts}">Between Accounts</a></li>
-                        <li><a th:href="@{/transfer/toSomeoneElse}">To Someone Else</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a th:href="@{/transfer/recipient}">Add/Edit Recipient</a></li>
-                    </ul>
-                </li>
+                
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Appointment <span class="caret"></span></a>
                     <ul class="dropdown-menu">

@@ -3,6 +3,7 @@
  */
 package ftn.diplomski.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ import ftn.diplomski.entity.User;
 import ftn.diplomski.entity.security.UserRole;
 import ftn.diplomski.repository.RoleDao;
 import ftn.diplomski.repository.UserDao;
+import ftn.diplomski.repository.UserRoleDao;
 
 /**
  * @author Boki on Dec 15, 2017
@@ -34,6 +36,9 @@ public class UserServiceImpl implements UserService {
 	
 	@Autowired
 	private RoleDao roleDao;
+	
+	@Autowired
+	private UserRoleDao userRoleDao;
 	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
@@ -82,11 +87,7 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see ftn.diplomski.service.UserService#createUser(ftn.diplomski.entity.User)
-	 */
 	@Override
-	
 	public User createUser(User user, Set<UserRole> userRoles) {
 		User localUser = userDao.findByUsername(user.getUsername());
 		
@@ -99,35 +100,32 @@ public class UserServiceImpl implements UserService {
 			for(UserRole ur: userRoles) {
 				roleDao.save(ur.getRole());
 			}
-			
 			user.getUserRoles().addAll(userRoles);
-			
 			localUser = userDao.save(user);
 		}
 		
 		return localUser;
 		
 	}
+	
+	public User updateUser(User user, List<UserRole> userRoles) {
+		for(UserRole ur: userRoles) {
+			roleDao.save(ur.getRole());
+		}
+		user.getUserRoles().addAll(userRoles);
+		return userDao.save(user);
+	}
 
-	/* (non-Javadoc)
-	 * @see ftn.diplomski.service.UserService#saveUser(ftn.diplomski.entity.User)
-	 */
 	@Override
 	public User saveUser(User user) {
 		return userDao.save(user);		
 	}
 
-	/* (non-Javadoc)
-	 * @see ftn.diplomski.service.UserService#findUserList()
-	 */
 	@Override
 	public List<User> findUserList() {
 		return userDao.findAll();
 	}
 
-	/* (non-Javadoc)
-	 * @see ftn.diplomski.service.UserService#enableUser(java.lang.String)
-	 */
 	@Override
 	public void enableUser(String username) {
 		User user = findByUsername(username);
@@ -135,9 +133,6 @@ public class UserServiceImpl implements UserService {
         userDao.save(user);		
 	}
 
-	/* (non-Javadoc)
-	 * @see ftn.diplomski.service.UserService#disableUser(java.lang.String)
-	 */
 	@Override
 	public void disableUser(String username) {
 		User user = findByUsername(username);
@@ -145,6 +140,27 @@ public class UserServiceImpl implements UserService {
         System.out.println(user.isEnabled());
         userDao.save(user);
         System.out.println(username + " is disabled.");		
+	}
+
+	@Override
+	public User findById(Long doctorId) {
+		return userDao.findOne(doctorId);
+	}
+
+	@Override
+	public List<User> findDoctorList() {
+		List<UserRole> userRoleList = userRoleDao.findByRole(roleDao.findByName("ROLE_DOCTOR"));
+		List<User> doctorList = new ArrayList();
+		for (UserRole userRole : userRoleList) {
+			User doctor = userRole.getUser();
+			doctorList.add(doctor);
+		}
+		return doctorList;
+	}
+
+	@Override
+	public List<User> findDoctorPatients(String username) {
+		return userDao.findByDoctorUsername(username);
 	}
 
 }

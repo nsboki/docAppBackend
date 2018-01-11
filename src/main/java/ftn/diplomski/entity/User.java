@@ -46,29 +46,28 @@ public class User implements UserDetails{
 	
 	@Column(name = "email", nullable = false, unique = true)
 	private String email;
+
+	private String doctorUsername;
 	
+	public String getDoctorUsername() {
+		return doctorUsername;
+	}
+
+	public void setDoctorUsername(String doctorUsername) {
+		this.doctorUsername = doctorUsername;
+	}
+
 	private boolean enabled = true;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Appointment> appointmentList;
 	
-	@ManyToOne
-	@JoinColumn(name = "doctor_id")
-	private Doctor doctor;
 	
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Set<UserRole> userRoles = new HashSet<>();
 	
-	public Doctor getDoctor() {
-		return doctor;
-	}
-
-	public void setDoctor(Doctor doctor) {
-		this.doctor = doctor;
-	}
-
 	public Set<UserRole> getUserRoles() {
 		return userRoles;
 	}

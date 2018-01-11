@@ -52,5 +52,26 @@ public interface UserService {
 	 * @param username
 	 */
 	void disableUser(String username);
+
+	/**
+	 * @param doctorId
+	 * @return
+	 */
+	User findById(Long doctorId);
+	
+	List<User> findDoctorList();
+
+	/**
+	 * @param tempUser
+	 * @param userRoles 
+	 * @return
+	 */
+	User updateUser(User tempUser, List<UserRole> userRoles);
+
+	/**
+	 * @param username
+	 * @return
+	 */
+	List<User> findDoctorPatients(String username);
 	
 }

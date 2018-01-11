@@ -23,6 +23,13 @@ public interface AppointmentService {
 	Appointment findAppointment(Long id);
 	
 	void confirmAppointment(Long id);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	List<Appointment> findDoctorAppointments(String username);
 	
+	List<Appointment> findUserAppointments(Long id);
 
 }

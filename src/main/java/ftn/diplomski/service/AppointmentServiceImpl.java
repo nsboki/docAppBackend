@@ -43,4 +43,16 @@ public class AppointmentServiceImpl implements AppointmentService {
 		appointmentDao.save(appointment);
 	}
 
+	@Override
+	public List<Appointment> findDoctorAppointments(String username) {
+		return appointmentDao.findByDoctorUsername(username);
+	}
+
+	@Override
+	public List<Appointment> findUserAppointments(Long id) {
+		return appointmentDao.findByPatient(id);
+	}
+	
+	
+
 }
