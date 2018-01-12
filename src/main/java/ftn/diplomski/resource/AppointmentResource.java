@@ -5,6 +5,7 @@ package ftn.diplomski.resource;
 
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,27 +44,28 @@ public class AppointmentResource {
 		return appointmentList;
 	}
 	
+	//doctor appointments
+	
 	@RequestMapping("/{username}")
 	public List<Appointment> findDoctorAppointmentList(@PathVariable("username")String username) {
-		List<Appointment> appList = appointmentService.findDoctorAppointments(username);
-		return appList;
+		return appointmentService.findDoctorAppointments(username);
 	}
 	
-	@RequestMapping("/{id}")
+	//user appointments
+	@RequestMapping("/me/{id}")
 	public List<Appointment> findUserAppointmentList(@PathVariable("id")Long id) {
-		List<Appointment> appList = appointmentService.findUserAppointments(id);
-		return appList;
+		return appointmentService.findUserAppointments(id);
 	}
 	
-	@RequestMapping(value = "/{id}", method = RequestMethod.POST)
-	public Appointment createAppointment(@PathVariable("id")Long id, @RequestBody Appointment appointment) {
-		User app4User = userService.findById(id);
+	@RequestMapping(value = "/new/{date}", method = RequestMethod.POST)
+	public Appointment createAppointment(@PathVariable("date")Date date, @RequestBody User user) {
+		User app4User = userService.findById(user.getUserId());
 		Appointment newAppointment = new Appointment();
 		newAppointment.setPatient(app4User);
 		newAppointment.setConfirmed(false);
-		newAppointment.setDate(appointment.getDate());
-		newAppointment.setDescription(appointment.getDescription());
-		newAppointment.setDoctorUsername(appointment.getDoctorUsername());
+		newAppointment.setDate(date);
+		newAppointment.setDescription("");
+		newAppointment.setDoctorUsername(app4User.getDoctorUsername());
 		return appointmentService.createAppointment(newAppointment);
 	}
 	

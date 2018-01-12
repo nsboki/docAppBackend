@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import ftn.diplomski.entity.User;
+import ftn.diplomski.entity.security.Role;
 import ftn.diplomski.entity.security.UserRole;
 import ftn.diplomski.repository.RoleDao;
 import ftn.diplomski.repository.UserDao;
@@ -161,6 +162,18 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<User> findDoctorPatients(String username) {
 		return userDao.findByDoctorUsername(username);
+	}
+
+	/* (non-Javadoc)
+	 * @see ftn.diplomski.service.UserService#getUserRole(java.lang.String)
+	 */
+	@Override
+	public String getUserRole(String username) {
+		User user= userDao.findByUsername(username);
+		UserRole userRole = userRoleDao.findByUser(user);
+		Role role = roleDao.findOne(userRole.getRole().getRoleId());
+		System.out.println(role.getName());
+		return role.getName();
 	}
 
 }

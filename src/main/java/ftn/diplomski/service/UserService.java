@@ -73,5 +73,11 @@ public interface UserService {
 	 * @return
 	 */
 	List<User> findDoctorPatients(String username);
+
+	/**
+	 * @param username
+	 * @return
+	 */
+	String getUserRole(String username);
 	
 }

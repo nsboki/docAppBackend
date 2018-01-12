@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ftn.diplomski.entity.User;
+import ftn.diplomski.entity.security.UserRole;
 import ftn.diplomski.repository.UserRoleDao;
+import ftn.diplomski.service.RoleService;
 import ftn.diplomski.service.UserService;
 
 /**
@@ -31,6 +33,9 @@ public class UserResource {
     
     @Autowired
     private UserRoleDao userRoleDao;
+    
+    @Autowired
+    private RoleService roleService;
 
     @RequestMapping(value = "/user/all", method = RequestMethod.GET)
     public List<User> userList() {
@@ -71,6 +76,12 @@ public class UserResource {
     	System.out.println(user);
     	newUser.setFirstName(user.getFirstName());
     	userService.saveUser(newUser);
+    }
+    
+    @RequestMapping("/user/role/{username}")
+    public String getUserRole(@PathVariable("username")String  username) {
+//    	UserRole userRole = userRoleDao.findByUser(username);
+    	return userService.getUserRole(username);
     }
     
 //    @RequestMapping(value = "/user/{username}", method = RequestMethod.POST)

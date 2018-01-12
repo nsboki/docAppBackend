@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import ftn.diplomski.entity.Appointment;
 import ftn.diplomski.repository.AppointmentDao;
+import ftn.diplomski.repository.UserDao;
 
 /**
  * @author Boki on Dec 26, 2017
@@ -20,6 +21,9 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Autowired
 	private AppointmentDao appointmentDao;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	@Override
 	public Appointment createAppointment(Appointment appointment) {
@@ -50,7 +54,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
 	@Override
 	public List<Appointment> findUserAppointments(Long id) {
-		return appointmentDao.findByPatient(id);
+		return appointmentDao.findByPatient(userDao.findOne(id));
 	}
 	
 	
