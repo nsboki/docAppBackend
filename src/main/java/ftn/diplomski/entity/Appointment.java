@@ -24,6 +24,7 @@ public class Appointment {
 	@GeneratedValue(strategy = GenerationType.AUTO	)
 	private Long id;
 	private Date date;
+	private int number;
 	private String description;
 	private boolean confirmed;
 	
@@ -39,6 +40,12 @@ public class Appointment {
 	@JoinColumn(name = "user_id")
 	private User patient;
 	
+	public int getNumber() {
+		return number;
+	}
+	public void setNumber(int number) {
+		this.number = number;
+	}
 	public Long getId() {
 		return id;
 	}

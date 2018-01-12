@@ -3,6 +3,7 @@
  */
 package ftn.diplomski.service;
 
+import java.util.Date;
 import java.util.List;
 
 import ftn.diplomski.entity.Appointment;
@@ -31,5 +32,11 @@ public interface AppointmentService {
 	List<Appointment> findDoctorAppointments(String username);
 	
 	List<Appointment> findUserAppointments(Long id);
+
+	/**
+	 * @param date
+	 * @return
+	 */
+	List<Appointment> findByDate(Date date);
 
 }

@@ -5,6 +5,9 @@ package ftn.diplomski.resource;
 
 import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -57,12 +60,21 @@ public class AppointmentResource {
 		return appointmentService.findUserAppointments(id);
 	}
 	
-	@RequestMapping(value = "/new/{date}", method = RequestMethod.POST)
-	public Appointment createAppointment(@PathVariable("date")Date date, @RequestBody User user) {
-		User app4User = userService.findById(user.getUserId());
+	@RequestMapping(value = "/new/{username}/{dateString}", method = RequestMethod.POST)
+	public Appointment createAppointment(@PathVariable("username")String username, @PathVariable("dateString") String dateString) {
+		User app4User = userService.findByUsername(username);
 		Appointment newAppointment = new Appointment();
 		newAppointment.setPatient(app4User);
 		newAppointment.setConfirmed(false);
+		DateFormat format = new SimpleDateFormat("yyyy-mm-dd");
+		Date date = new Date();
+		try {
+			date = format.parse(dateString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		List<Appointment> appList = appointmentService.findByDate(date);
+		newAppointment.setNumber(appList.size()+1);
 		newAppointment.setDate(date);
 		newAppointment.setDescription("");
 		newAppointment.setDoctorUsername(app4User.getDoctorUsername());

@@ -3,6 +3,7 @@
  */
 package ftn.diplomski.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
@@ -25,4 +26,10 @@ public interface AppointmentDao extends CrudRepository<Appointment, Long>{
 	List<Appointment> findByDoctorUsername(String username);
 	
 	List<Appointment> findByPatient(User user);
+
+	/**
+	 * @param date
+	 * @return
+	 */
+	List<Appointment> findByDate(Date date);
 }

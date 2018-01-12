@@ -3,6 +3,7 @@
  */
 package ftn.diplomski.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public List<Appointment> findUserAppointments(Long id) {
 		return appointmentDao.findByPatient(userDao.findOne(id));
+	}
+
+	@Override
+	public List<Appointment> findByDate(Date date) {
+		return appointmentDao.findByDate(date);
 	}
 	
 	
