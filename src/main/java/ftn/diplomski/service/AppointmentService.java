@@ -49,5 +49,9 @@ public interface AppointmentService {
 	 * @param appointment
 	 */
 	void deleteAppointment(Appointment appointment);
+	
+	List<Appointment> findByDateAndDoctor(Date date, String doctorUsername);
+	
+	boolean haveActiveAppointment(String username);
 
 }

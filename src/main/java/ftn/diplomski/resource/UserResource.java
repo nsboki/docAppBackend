@@ -84,6 +84,13 @@ public class UserResource {
     	return userService.getUserRole(username);
     }
     
+    //    let url = ServerUrl + "/api/user/credentials/"+username;
+
+    @RequestMapping("/user/credentials/{username}")
+    public boolean checkCredentials(@PathVariable("usernaem")String username, @RequestBody String password) {
+    	return userService.checkCredentials(username, password);
+    }
+    
 //    @RequestMapping(value = "/user/{username}", method = RequestMethod.POST)
 //    public void saveUser(@PathVariable("username") String username, @RequestParam("firstName") String firstName, @RequestParam("lastName") String lastName) {
 //    	User tempUser = userService.findByUsername(username);

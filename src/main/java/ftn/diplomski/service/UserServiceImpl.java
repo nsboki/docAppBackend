@@ -164,9 +164,6 @@ public class UserServiceImpl implements UserService {
 		return userDao.findByDoctorUsername(username);
 	}
 
-	/* (non-Javadoc)
-	 * @see ftn.diplomski.service.UserService#getUserRole(java.lang.String)
-	 */
 	@Override
 	public String getUserRole(String username) {
 		User user= userDao.findByUsername(username);
@@ -174,6 +171,27 @@ public class UserServiceImpl implements UserService {
 		Role role = roleDao.findOne(userRole.getRole().getRoleId());
 		System.out.println(role.getName());
 		return role.getName();
+	}
+
+	@Override
+	public boolean checkCredentials(String username, String password) {
+		User user = userDao.findByUsername(username);
+		if(user == null) {
+			LOG.info("User with username {} don't exist. Nothing will be done. ", user.getUsername());
+		} else {
+			String encriptedPassword = passwordEncoder.encode(user.getPassword());
+			if (encriptedPassword == password) {
+//				UserRole userRole = userRoleDao.findByUser(user);
+//				Role role = roleDao.findOne(userRole.getRole().getRoleId());
+//				return role.getName();
+				System.out.println(password);
+				System.out.println(encriptedPassword);
+				return true;
+			} 
+			System.out.println(password);
+			System.out.println(encriptedPassword);
+		}
+		return false;
 	}
 
 }

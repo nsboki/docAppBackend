@@ -79,5 +79,12 @@ public interface UserService {
 	 * @return
 	 */
 	String getUserRole(String username);
+
+	/**
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	boolean checkCredentials(String username, String password);
 	
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import ftn.diplomski.entity.Appointment;
+import ftn.diplomski.entity.User;
 import ftn.diplomski.repository.AppointmentDao;
 import ftn.diplomski.repository.UserDao;
 
@@ -71,6 +72,23 @@ public class AppointmentServiceImpl implements AppointmentService {
 	@Override
 	public void deleteAppointment(Appointment appointment) {
 		appointmentDao.delete(appointment);
+	}
+
+	@Override
+	public List<Appointment> findByDateAndDoctor(Date date, String doctorUsername) {
+		return appointmentDao.findByDateAndDoctorUsername(date, doctorUsername);
+	}
+
+	@Override
+	public boolean haveActiveAppointment(String username) {
+		User user = userDao.findByUsername(username);
+		List<Appointment> appList = appointmentDao.findByPatient(user);
+		for (Appointment appointment : appList) {
+			if (!appointment.isConfirmed()) {
+				return false;
+			}
+		}
+		return true;
 	}
 	
 	

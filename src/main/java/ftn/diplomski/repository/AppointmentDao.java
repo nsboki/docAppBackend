@@ -32,4 +32,11 @@ public interface AppointmentDao extends CrudRepository<Appointment, Long>{
 	 * @return
 	 */
 	List<Appointment> findByDate(Date date);
+
+	/**
+	 * @param date
+	 * @param doctorUsername
+	 * @return
+	 */
+	List<Appointment> findByDateAndDoctorUsername(Date date, String doctorUsername);
 }

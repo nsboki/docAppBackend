@@ -74,8 +74,16 @@ public class AppointmentResource {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		List<Appointment> appList = appointmentService.findByDate(date);
-		newAppointment.setNumber(appList.size()+1);
+		List<Appointment> appList = appointmentService.findByDateAndDoctor(date,app4User.getDoctorUsername());
+		int listSize = appList.size();
+		int number;
+		if (listSize == 0) {
+			number = 1;
+		} else {
+			number = appList.get((listSize)-1).getNumber()+1;
+		}
+//		newAppointment.setNumber(appList.size()+1);
+		newAppointment.setNumber(number);
 		newAppointment.setDate(date);
 		newAppointment.setDescription("");
 		newAppointment.setDoctorUsername(app4User.getDoctorUsername());
@@ -94,11 +102,16 @@ public class AppointmentResource {
 		return appointmentService.updateAppointment(appointment);
 	}
 	
-	//url = ServerUrl+"/api/appointment/delete/"+id;
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public void deleteAppointment(@PathVariable("id")Long id) {
 		Appointment appointment = appointmentService.findAppointment(id);
 		appointmentService.deleteAppointment(appointment);
+	}
+	
+	//"/api/appointment/active/"+username;
+	@RequestMapping("/active/{username}")
+	public boolean getActiveAppointment(@PathVariable("username") String username) {
+		return appointmentService.haveActiveAppointment(username);
 	}
 
 }
