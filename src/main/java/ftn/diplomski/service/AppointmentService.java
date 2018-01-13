@@ -45,4 +45,9 @@ public interface AppointmentService {
 	 */
 	Appointment updateAppointment(Appointment appointment);
 
+	/**
+	 * @param appointment
+	 */
+	void deleteAppointment(Appointment appointment);
+
 }

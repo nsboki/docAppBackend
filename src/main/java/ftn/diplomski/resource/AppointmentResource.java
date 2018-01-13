@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -86,14 +87,18 @@ public class AppointmentResource {
 		appointmentService.confirmAppointment(id);
 	}
 	
-	//let url = ServerUrl+"/api/appointment/description/"+id;
-	@RequestMapping(value = "/description/{id}/{description}", method = RequestMethod.POST)
-	public Appointment updateDescription(@PathVariable("id")Long id, @PathVariable("description") String description) {
+	@RequestMapping(value = "/description/{id}", method = RequestMethod.POST)
+	public Appointment updateDescription(@PathVariable("id")Long id, @RequestBody String description) {
 		Appointment appointment = appointmentService.findAppointment(id);
-		System.out.println(appointment.getDescription());
 		appointment.setDescription(description);
-		System.out.println(appointment.getDescription());
 		return appointmentService.updateAppointment(appointment);
+	}
+	
+	//url = ServerUrl+"/api/appointment/delete/"+id;
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public void deleteAppointment(@PathVariable("id")Long id) {
+		Appointment appointment = appointmentService.findAppointment(id);
+		appointmentService.deleteAppointment(appointment);
 	}
 
 }

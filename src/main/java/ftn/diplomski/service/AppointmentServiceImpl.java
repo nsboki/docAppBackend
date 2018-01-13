@@ -67,6 +67,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public Appointment updateAppointment(Appointment appointment) {
 		return appointmentDao.save(appointment);
 	}
+
+	@Override
+	public void deleteAppointment(Appointment appointment) {
+		appointmentDao.delete(appointment);
+	}
 	
 	
 
