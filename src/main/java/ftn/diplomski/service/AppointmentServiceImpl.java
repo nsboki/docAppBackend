@@ -62,6 +62,11 @@ public class AppointmentServiceImpl implements AppointmentService {
 	public List<Appointment> findByDate(Date date) {
 		return appointmentDao.findByDate(date);
 	}
+
+	@Override
+	public Appointment updateAppointment(Appointment appointment) {
+		return appointmentDao.save(appointment);
+	}
 	
 	
 

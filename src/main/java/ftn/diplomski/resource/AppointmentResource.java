@@ -61,7 +61,7 @@ public class AppointmentResource {
 	}
 	
 	@RequestMapping(value = "/new/{username}/{dateString}", method = RequestMethod.POST)
-	public Appointment createAppointment(@PathVariable("username")String username, @PathVariable("dateString") String dateString) {
+	public Appointment createAppointment(@PathVariable("username")String username, @RequestBody String dateString) {
 		User app4User = userService.findByUsername(username);
 		Appointment newAppointment = new Appointment();
 		newAppointment.setPatient(app4User);
@@ -84,6 +84,16 @@ public class AppointmentResource {
 	@RequestMapping("/{id}/confirm")
 	public void confirmAppointment(@PathVariable("id") Long id) {
 		appointmentService.confirmAppointment(id);
+	}
+	
+	//let url = ServerUrl+"/api/appointment/description/"+id;
+	@RequestMapping(value = "/description/{id}/{description}", method = RequestMethod.POST)
+	public Appointment updateDescription(@PathVariable("id")Long id, @PathVariable("description") String description) {
+		Appointment appointment = appointmentService.findAppointment(id);
+		System.out.println(appointment.getDescription());
+		appointment.setDescription(description);
+		System.out.println(appointment.getDescription());
+		return appointmentService.updateAppointment(appointment);
 	}
 
 }

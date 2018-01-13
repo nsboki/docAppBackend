@@ -39,4 +39,10 @@ public interface AppointmentService {
 	 */
 	List<Appointment> findByDate(Date date);
 
+	/**
+	 * @param appointment
+	 * @return
+	 */
+	Appointment updateAppointment(Appointment appointment);
+
 }
