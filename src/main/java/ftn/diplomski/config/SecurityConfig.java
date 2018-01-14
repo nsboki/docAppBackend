@@ -5,6 +5,8 @@ package ftn.diplomski.config;
 
 import java.security.SecureRandom;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -63,7 +65,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll().anyRequest().authenticated();
 		http
 				.csrf().disable().cors().disable()
-				.formLogin().failureUrl("/index?error").defaultSuccessUrl("/userFront").loginPage("/index").permitAll()
+				.formLogin()
+				.loginPage("/index").permitAll()
+				.loginProcessingUrl("/index").permitAll()
+                .usernameParameter("username")
+                .successHandler((request, response, authentication) -> {
+                    response.setStatus(HttpServletResponse.SC_OK);
+                })
+                .failureHandler((request, response, exception) -> {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                })
+//				.failureUrl("/index?error")
+//				.defaultSuccessUrl("/userFront").loginPage("/index").permitAll()
 				.and()
 				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/index?logout").deleteCookies("remember-me").permitAll()
 				.and()

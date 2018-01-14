@@ -169,7 +169,6 @@ public class UserServiceImpl implements UserService {
 		User user= userDao.findByUsername(username);
 		UserRole userRole = userRoleDao.findByUser(user);
 		Role role = roleDao.findOne(userRole.getRole().getRoleId());
-		System.out.println(role.getName());
 		return role.getName();
 	}
 

@@ -41,6 +41,7 @@ public class AppointmentResource {
 	@Autowired
 	private UserService userService;
 	
+	@PreAuthorize("hasRole('ADMIN')")
 	@RequestMapping("/all")
 	public List<Appointment> findAppointmentList() {
 		List<Appointment> appointmentList = appointmentService.findAll();
@@ -49,18 +50,20 @@ public class AppointmentResource {
 	}
 	
 	//doctor appointments
-	
+	@PreAuthorize("hasRole('DOCTOR')")
 	@RequestMapping("/{username}")
 	public List<Appointment> findDoctorAppointmentList(@PathVariable("username")String username) {
 		return appointmentService.findDoctorAppointments(username);
 	}
 	
 	//user appointments
+	@PreAuthorize("hasAnyRole('DOCTOR', 'USER')")
 	@RequestMapping("/me/{id}")
 	public List<Appointment> findUserAppointmentList(@PathVariable("id")Long id) {
 		return appointmentService.findUserAppointments(id);
 	}
 	
+	@PreAuthorize("hasAnyRole('DOCTOR', 'USER')")
 	@RequestMapping(value = "/new/{username}/{dateString}", method = RequestMethod.POST)
 	public Appointment createAppointment(@PathVariable("username")String username, @RequestBody String dateString) {
 		User app4User = userService.findByUsername(username);
@@ -90,11 +93,13 @@ public class AppointmentResource {
 		return appointmentService.createAppointment(newAppointment);
 	}
 	
+	@PreAuthorize("hasRole('DOCTOR')")
 	@RequestMapping("/{id}/confirm")
 	public void confirmAppointment(@PathVariable("id") Long id) {
 		appointmentService.confirmAppointment(id);
 	}
 	
+	@PreAuthorize("hasRole('DOCTOR')")
 	@RequestMapping(value = "/description/{id}", method = RequestMethod.POST)
 	public Appointment updateDescription(@PathVariable("id")Long id, @RequestBody String description) {
 		Appointment appointment = appointmentService.findAppointment(id);
@@ -102,6 +107,7 @@ public class AppointmentResource {
 		return appointmentService.updateAppointment(appointment);
 	}
 	
+	@PreAuthorize("hasAnyRole('DOCTOR', 'USER')")
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
 	public void deleteAppointment(@PathVariable("id")Long id) {
 		Appointment appointment = appointmentService.findAppointment(id);
