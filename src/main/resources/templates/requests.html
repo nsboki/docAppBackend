@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head th:replace="common/header :: common-header"/>
+<body roleId="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+<head th:replace="common/header :: navbar"/>
+<div class="container">
+    <div class="row main">
+        <div class="col-md-12">
+            <h2 class="title">Pending Requests</h2>
+            <hr/>
+
+			<table>
+				<tr width="100%">
+					<th width="15%">Username</th>
+					<th width="15%">First Name</th>
+					<th width="15%">Last Name</th>
+					<th width="15%">e-mail</th>
+					<th width="15%">Doctor</th>
+					<th width="15%" colspan="2" align="center">Action</th>
+				</tr>
+				<th:block th:each="request : ${activeRequests}">
+					<tr>
+						<td th:text="${request.username}">...</td>
+						<td th:text="${request.firstName}">...</td>
+						<td th:text="${request.lastName}">...</td>
+						<td th:text="${request.email}">...</td>
+						<td th:text="${request.doctor}">...</td>
+						<td><a th:href="@{/requests/accept(id=${request.id})}">accept</a></td>
+						<td><a th:href="@{/requests/discard(id=${request.id})}">discard</a></td>
+					</tr>
+				</th:block>
+			</table>
+		</div>
+		<div class="col-md-12">
+            <h2 class="title">Solved Requests</h2>
+            <hr/>
+
+			<table>
+				<tr width="100%">
+					<th width="15%">Username</th>
+					<th width="15%">First Name</th>
+					<th width="15%">Last Name</th>
+					<th width="15%">e-mail</th>
+					<th width="15%">Doctor</th>
+					<th width="15%">Accepted</th>
+				</tr>
+				<th:block th:each="request : ${archivedRequests}">
+					<tr>
+						<td th:text="${request.username}">...</td>
+						<td th:text="${request.firstName}">...</td>
+						<td th:text="${request.lastName}">...</td>
+						<td th:text="${request.email}">...</td>
+						<td th:text="${request.doctor}">...</td>
+						<td th:text="${request.confirmed}">...</td>
+					</tr>
+				</th:block>
+			</table>
+		</div>
+        <div class="col-md-12">
+        </div>
+    </div>
+</div>
+
+
+<div th:replace="common/header :: body-bottom-scripts"/>
+
+</body>
+</html>

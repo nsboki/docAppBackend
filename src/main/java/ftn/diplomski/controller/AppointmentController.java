@@ -9,6 +9,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +27,7 @@ import ftn.diplomski.service.UserService;
  */
 @Controller
 @RequestMapping("/appointment")
+@PreAuthorize("hasRole('ADMIN')")
 public class AppointmentController {
 	
 	@Autowired

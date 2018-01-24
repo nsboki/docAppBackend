@@ -6,6 +6,7 @@ package ftn.diplomski.config;
 import java.security.SecureRandom;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.tools.DocumentationTool.Location;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -71,9 +72,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usernameParameter("username")
                 .successHandler((request, response, authentication) -> {
                     response.setStatus(HttpServletResponse.SC_OK);
+                    response.sendRedirect("/userFront");
                 })
                 .failureHandler((request, response, exception) -> {
                     response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                   
                 })
 //				.failureUrl("/index?error")
 //				.defaultSuccessUrl("/userFront").loginPage("/index").permitAll()

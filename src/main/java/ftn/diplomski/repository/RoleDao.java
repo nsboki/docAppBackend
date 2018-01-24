@@ -3,6 +3,8 @@
  */
 package ftn.diplomski.repository;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
 import ftn.diplomski.entity.security.Role;
@@ -13,5 +15,6 @@ import ftn.diplomski.entity.security.Role;
  */
 public interface RoleDao extends CrudRepository<Role, Integer> {
 	Role findByName(String name);
+	List<Role> findAll();
 	
 }

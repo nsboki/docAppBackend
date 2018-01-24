@@ -171,6 +171,8 @@ public class UserServiceImpl implements UserService {
 		Role role = roleDao.findOne(userRole.getRole().getRoleId());
 		return role.getName();
 	}
+	
+	
 
 	@Override
 	public boolean checkCredentials(String username, String password) {

@@ -3,6 +3,8 @@
  */
 package ftn.diplomski.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +25,16 @@ public class RoleServiceImpl implements RoleService {
 	public String getRole(int roleId) {
 		Role role = roleDao.findOne(roleId);
 		return role.getName();
+	}
+
+	@Override
+	public List<Role> findAll() {
+		return roleDao.findAll();
+	}
+
+	@Override
+	public Role findByName(String rolena) {
+		return roleDao.findByName(rolena);
 	}
 
 }

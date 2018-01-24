@@ -27,7 +27,6 @@ public class Appointment {
 	private int number;
 	private String description;
 	private boolean confirmed;
-	
 	private String doctorUsername;
 	
 	public String getDoctorUsername() {

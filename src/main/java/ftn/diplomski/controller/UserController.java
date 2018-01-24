@@ -4,15 +4,22 @@
 package ftn.diplomski.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import ftn.diplomski.entity.User;
+import ftn.diplomski.entity.security.Role;
+import ftn.diplomski.entity.security.UserRole;
+import ftn.diplomski.service.RoleService;
+import ftn.diplomski.service.UserRoleService;
 import ftn.diplomski.service.UserService;
 
 /**
@@ -21,10 +28,17 @@ import ftn.diplomski.service.UserService;
  */
 @Controller
 @RequestMapping("/user")
+@PreAuthorize("hasRole('ADMIN')")
 public class UserController {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private RoleService roleService;
+	
+	@Autowired
+	private UserRoleService urService;
 	
 	@RequestMapping(value = "/profile", method = RequestMethod.GET)
 	public String profile(Principal principal, Model model) {
@@ -49,5 +63,37 @@ public class UserController {
 		
 		return "profile";
 	}
+	
+	@RequestMapping(value = "/accounts", method = RequestMethod.GET)
+	public String allAccounts(Model model) {
+		List<User> users = userService.findUserList();
+		model.addAttribute("users", users);
+		
+		return "users";
+	}
+	
+	@RequestMapping(value = "/accounts/user", method = RequestMethod.GET)
+	public String user(@RequestParam("username") String username, Model model) {
+		User user = userService.findByUsername(username);
+		String role = userService.getUserRole(username);
+		List<Role> roles = roleService.findAll();
+		model.addAttribute("user", user);
+		model.addAttribute("role", role);
+		model.addAttribute("roles", roles);
+		model.addAttribute("newRole", "");
+		model.addAttribute("username", username);
+		return "user";
+	}
+	
+	@RequestMapping(value = "/accounts/user", method = RequestMethod.POST)
+	public String changeRole(@ModelAttribute("username")String username, @ModelAttribute("newRole") String roleName, Model model) {
+		User tempUser = userService.findByUsername(username);
+		UserRole userRole = urService.findByUser(tempUser);
+		Role role = roleService.findByName(roleName);
+		userRole.setRole(role);
+		urService.update(userRole);
+		return "redirect:/user/accounts";
+	}
+
 	
 }
